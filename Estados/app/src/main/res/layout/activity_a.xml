@@ -31,19 +31,19 @@ limitations under the License.
         android:paddingBottom="16dip"
         />
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         >
+
         <Button
             android:id="@+id/btn_start_b"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="@string/btn_start_b_label"
+            android:layout_height="wrap_content"
             android:onClick="startActivityB"
-            />
+            android:text="@string/btn_start_b_label" />
 
         <Button
             android:id="@+id/btn_start_c"

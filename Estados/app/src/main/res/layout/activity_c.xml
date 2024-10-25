@@ -21,15 +21,15 @@ limitations under the License.
     android:background="@color/dark_red"
     android:padding="8dip"
     >
-<TextView  
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/activity_c_label"
-    android:gravity="center_horizontal"
-    android:textSize="@dimen/font_large"
-    android:textColor="@color/light_red"
-    android:paddingBottom="16dip"
-    />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingBottom="16dip"
+        android:text="@string/activity_c_label"
+        android:textColor="@color/light_red"
+        android:textSize="@dimen/font_large" />
 
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -84,21 +84,21 @@ limitations under the License.
     android:textColor="@color/light_red"
     />
 
-<ScrollView
-     android:layout_width="match_parent"
-     android:layout_height="160dp">
-    <TextView
-        android:id="@+id/status_view_c"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:textColor="@color/black"
-        android:padding="4dip"
-        android:typeface="monospace"
-        />
-</ScrollView>
+        android:layout_height="160dp">
 
-<TextView
+        <TextView
+            android:id="@+id/status_view_c"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="4dip"
+            android:textColor="@color/black"
+            android:typeface="monospace" />
+    </ScrollView>
+
+    <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:textSize="@dimen/font_medium"
@@ -106,14 +106,14 @@ limitations under the License.
     android:textColor="@color/light_red"
     />
 
-<TextView
-    android:id="@+id/status_view_all_c"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:textColor="@color/black"
-    android:padding="4dip"
-    android:typeface="monospace"
-    />
+    <TextView
+        android:id="@+id/status_view_all_c"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="4dip"
+        android:textColor="@color/black"
+        android:typeface="monospace" />
+
 </LinearLayout>
 
