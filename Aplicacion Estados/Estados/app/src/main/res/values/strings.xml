@@ -18,7 +18,7 @@ limitations under the License.
     <string name="app_name">Activity Lifecycle</string>
 
     <string name="lifecycle_method_list">Lifecycle Method List</string>
-    <string name="activity_status">Activity Status</string>
+    <string name="activity_status">Estado Actividad</string>
     <string name="dialog_text">Simple Dialog</string>
 
     <string name="on_create">onCreate</string>

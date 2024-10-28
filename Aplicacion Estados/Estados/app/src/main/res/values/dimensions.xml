@@ -18,4 +18,5 @@ limitations under the License.
     <dimen name="font_large">44dp</dimen>
     <dimen name="font_medium">24dp</dimen>
     <dimen name="font_small">10dp</dimen>
+    <dimen name="grandecito">30dp</dimen>
 </resources>

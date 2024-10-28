@@ -99,7 +99,7 @@ limitations under the License.
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/font_medium"
+        android:textSize="@dimen/grandecito"
         android:text="@string/activity_status"
         android:textColor="@color/light_blue"
         />
@@ -112,6 +112,29 @@ limitations under the License.
         android:textColor="@color/black"
         android:padding="4dip"
         android:typeface="monospace"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textito"
+        android:hint="Introduce email"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:shadowColor="@color/black"
+    />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/botoncito"
+        android:text="Mi botón"
+    />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mi primer checkbox"
         />
 </LinearLayout>
 

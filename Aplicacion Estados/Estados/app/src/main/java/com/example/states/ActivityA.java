@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.states.util.StatusTracker;
 import com.example.states.util.Utils;
@@ -18,6 +21,11 @@ public class ActivityA extends Activity {
     private TextView mStatusView;
     private TextView mStatusAllView;
     private StatusTracker mStatusTracker = StatusTracker.getInstance();
+    //declaramos los componentes que creamos en activity_a.xml
+    //textView no porq es un elemento q no almacena nada, aqui los nombres no importan y hay que conectarlos a traves del onCreate, porque inicializamos los elementos de la interfaz
+    //declaramos la variable a la que le asignaremos el elemento Button por ejemplo
+    private EditText textito;
+    private Button botoncito;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,6 +36,16 @@ public class ActivityA extends Activity {
         mStatusAllView = (TextView) findViewById(R.id.status_view_all_a);
         mStatusTracker.setStatus(mActivityName, getString(R.string.on_create));
         Utils.printStatus(mStatusView, mStatusAllView);
+        //hay que hacer un cast
+        textito = (EditText) findViewById(R.id.textito);
+        botoncito = (Button) findViewById(R.id.botoncito);
+        //ponte a escuchar
+        botoncito.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(ActivityA.this,"Surprise",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
