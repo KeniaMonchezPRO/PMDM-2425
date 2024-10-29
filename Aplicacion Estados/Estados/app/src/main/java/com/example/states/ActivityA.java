@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ public class ActivityA extends Activity {
     //declaramos la variable a la que le asignaremos el elemento Button por ejemplo
     private EditText textito;
     private Button botoncito;
+    private ScrollView scrollView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class ActivityA extends Activity {
                 Toast.makeText(ActivityA.this,"Surprise",Toast.LENGTH_SHORT).show();
             }
         });
+        scrollView = (ScrollView) findViewById(R.id.scroller);
     }
 
     @Override

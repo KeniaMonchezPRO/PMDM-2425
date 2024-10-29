@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Formulario</string>
+    <string name="checkbox_publicidade">Aprobas que che enviemos publicidade?</string>
+    <string name="editText_nome">Nome</string>
+</resources>
