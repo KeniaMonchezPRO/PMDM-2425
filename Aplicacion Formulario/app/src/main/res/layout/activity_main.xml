@@ -7,18 +7,22 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <CheckBox
-        android:id="@+id/checkBoxPublicidade"
+    <TextView
+        android:id="@+id/tv_formulario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="564dp"
-        android:text="@string/checkbox_publicidade"
+        android:layout_marginTop="60dp"
+        android:text="@string/textView_form"
+        android:textAllCaps="true"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextNome"
+        android:id="@+id/edit_nome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="144dp"
@@ -27,99 +31,107 @@
         android:inputType="text"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.238"
+        app:layout_constraintHorizontal_bias="0.137"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextEmail"
+        android:id="@+id/edit_apelidos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="376dp"
+        android:layout_marginTop="196dp"
         android:ems="10"
-        android:hint="E-mail"
+        android:hint="@string/editText_apelidos"
+        android:inputType="text"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.137"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/edit_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="248dp"
+        android:ems="10"
+        android:hint="@string/editText_email"
         android:inputType="textEmailAddress"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.238"
+        app:layout_constraintHorizontal_bias="0.137"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextContrasinal"
+        android:id="@+id/edit_mobil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="452dp"
+        android:layout_marginTop="296dp"
         android:ems="10"
-        android:hint="Contrasinal"
+        android:hint="@string/editText_mobil"
+        android:inputType="phone"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.137"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/edit_contrasinal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="344dp"
+        android:ems="10"
+        android:hint="@string/editText_contrasinal"
         android:inputType="textPassword"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.238"
+        app:layout_constraintHorizontal_bias="0.137"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnLimpar"
+    <CheckBox
+        android:id="@+id/check_publicidade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="644dp"
-        android:text="Limpar"
+        android:layout_marginTop="612dp"
+        android:text="@string/checkbox_publicidade"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.188"
+        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnGardar"
+        android:id="@+id/btn_gardar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="644dp"
-        android:text="Gardar"
+        android:layout_marginTop="668dp"
+        android:text="@string/button_gardar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.821"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/editTextApelidos"
+    <Button
+        android:id="@+id/btn_limpar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="216dp"
-        android:ems="10"
-        android:hint="Apelidos"
-        android:inputType="text"
-        android:textSize="14sp"
+        android:layout_marginTop="668dp"
+        android:text="@string/button_limpar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.238"
+        app:layout_constraintHorizontal_bias="0.188"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/editTextMobil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="296dp"
-        android:ems="10"
-        android:hint="Móbil"
-        android:inputType="phone"
-        android:textSize="14sp"
+    <ImageButton
+        android:id="@+id/imaxe"
+        android:layout_width="200dp"
+        android:layout_height="190dp"
+        android:layout_marginTop="408dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.238"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textViewForm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:text="Formulario"
-        android:textAllCaps="true"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -2,10 +2,10 @@ package com.example.formulario;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private Button limpar;
     private EditText nome, apelidos, mobil, email, contrasinal;
     private CheckBox publicidade;
+    private ImageButton imaxe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,20 +32,22 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        gardar = (Button) findViewById(R.id.btnGardar);
-        limpar = (Button) findViewById(R.id.btnLimpar);
-        nome = (EditText) findViewById(R.id.editTextNome);
-        apelidos = (EditText) findViewById(R.id.editTextApelidos);
-        mobil = (EditText) findViewById(R.id.editTextMobil);
-        email = (EditText) findViewById(R.id.editTextEmail);
-        contrasinal = (EditText) findViewById(R.id.editTextContrasinal);
-        publicidade = (CheckBox) findViewById(R.id.checkBoxPublicidade);
+        //inicializamos c/compoñente co seu id:
+        gardar = findViewById(R.id.btn_gardar);
+        limpar = findViewById(R.id.btn_limpar);
+        nome = findViewById(R.id.edit_nome);
+        apelidos = findViewById(R.id.edit_apelidos);
+        mobil = findViewById(R.id.edit_mobil);
+        email = findViewById(R.id.edit_email);
+        contrasinal = findViewById(R.id.edit_contrasinal);
+        publicidade = findViewById(R.id.check_publicidade);
+        imaxe = findViewById(R.id.imaxe);
+        imaxe.setImageResource(R.drawable.journey);
 
         gardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this,nome.getText() + " " + apelidos.getText(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this,"Enviado",Toast.LENGTH_SHORT).show();
             }
         });
 
