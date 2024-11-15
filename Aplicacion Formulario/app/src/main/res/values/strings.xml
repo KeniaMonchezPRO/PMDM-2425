@@ -14,4 +14,6 @@
 
     <string name="button_limpar">Limpar</string>
     <string name="button_gardar">Gardar</string>
+    <string name="button_axuda">"?"</string>
+    <string name="button_pechar">Pechar</string>
 </resources>

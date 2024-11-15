@@ -1,11 +1,13 @@
 package com.example.formulario;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -14,13 +16,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+
 public class MainActivity extends AppCompatActivity {
+
 
     private Button gardar;
     private Button limpar;
     private EditText nome, apelidos, mobil, email, contrasinal;
     private CheckBox publicidade;
     private ImageButton imaxe;
+    private Button axuda;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         //inicializamos c/compoñente co seu id:
         gardar = findViewById(R.id.btn_gardar);
         limpar = findViewById(R.id.btn_limpar);
@@ -44,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         publicidade = findViewById(R.id.check_publicidade);
         imaxe = findViewById(R.id.imaxe);
         imaxe.setImageResource(R.drawable.journey);
+        axuda = findViewById(R.id.btn_axuda);
 
         gardar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +70,10 @@ public class MainActivity extends AppCompatActivity {
                 publicidade.setChecked(false);
             }
         });
-
     }
 
+    public void startActivityHelp(View v) {
+        Intent intent = new Intent(MainActivity.this, ActivityHelp.class);
+        startActivity(intent);
+    }
 }

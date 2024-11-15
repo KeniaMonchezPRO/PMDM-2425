@@ -48,7 +48,7 @@ public class ActivityA extends Activity {
                 Toast.makeText(ActivityA.this,"Surprise",Toast.LENGTH_SHORT).show();
             }
         });
-        scrollView = (ScrollView) findViewById(R.id.scroller);
+        //scrollView = (ScrollView) findViewById(R.id.scroller);
     }
 
     @Override
