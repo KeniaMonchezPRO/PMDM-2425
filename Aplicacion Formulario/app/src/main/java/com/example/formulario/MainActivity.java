@@ -1,6 +1,9 @@
 package com.example.formulario;
 
+import static androidx.core.location.LocationManagerCompat.getCurrentLocation;
+
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,9 +15,14 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -26,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox publicidade;
     private ImageButton imaxe;
     private Button axuda;
+
+    //probando xeolocalizacion:
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1; //codigo de permiso
+    private FusedLocationProviderClient fusedLocationClient; //var para cliente del localizador
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +64,15 @@ public class MainActivity extends AppCompatActivity {
         imaxe.setImageResource(R.drawable.journey);
         axuda = findViewById(R.id.btn_axuda);
 
-        gardar.setOnClickListener(new View.OnClickListener() {
+        /*gardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(MainActivity.this,"Enviado",Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
+
+        gardar.setOnClickListener(view -> getCurrentLocation()); //nos definimos este método
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         limpar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +85,42 @@ public class MainActivity extends AppCompatActivity {
                 publicidade.setChecked(false);
             }
         });
+    }
+
+    private void getCurrentLocation() {
+        // Verifica os permisos
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Solicita os permisos
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION},
+                    LOCATION_PERMISSION_REQUEST_CODE);
+        } else {
+            // Obten a ubicacion actual
+            fusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, location -> {
+                        if (location != null) {
+                            double latitude = location.getLatitude();
+                            double longitude = location.getLongitude();
+                            Toast.makeText(this, "Latitude: " + latitude + ", Lonxitude: "
+                                    + longitude, Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(this, "Nin idea de onde andas", Toast.LENGTH_LONG).show();
+                        }
+                    });
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getCurrentLocation();
+            } else {
+                Toast.makeText(this, "Permiso denegado", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     public void startActivityHelp(View v) {
