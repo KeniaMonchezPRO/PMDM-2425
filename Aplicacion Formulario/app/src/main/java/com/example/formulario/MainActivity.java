@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton imaxe;
     private Button axuda;
 
+
+
     //probando xeolocalizacion:
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1; //codigo de permiso
     private FusedLocationProviderClient fusedLocationClient; //var para cliente del localizador
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
 
         //inicializamos c/compoñente co seu id:
         gardar = findViewById(R.id.btn_gardar);
