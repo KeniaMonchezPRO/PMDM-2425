@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +28,15 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -91,7 +101,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //probarPreferenciasCompartidas();
-        cargarDatosAlForm();
+        //cargarDatosAlForm();
+
+        //almaceamento interno
+        escribirAlmacenamentoInterno("arquivo.txt", "Exemplo de almacenamento interno en Android");
+        lerAlmacenamentoInterno("arquivo.txt");
+        localizarArquivo("arquivo.txt");
+
+        //almaceamento externo
+        gardarAlmaceamentoExterno();
+        lerAlmaceamentoExterno();
 
     }
 
@@ -160,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("prefs", "Int: " + claveUsuario);
         Log.d("prefs", "Boolean: " + recordarUsuario);
     }
-    public void cargarDatosAlForm() {
+    /*public void cargarDatosAlForm() {
            SharedPreferences prefs = this.getSharedPreferences("MisPreferencias",Context.MODE_PRIVATE);
            SharedPreferences.Editor editor = prefs.edit();
            editor.putString("nome","John");
@@ -189,5 +208,110 @@ public class MainActivity extends AppCompatActivity {
            Log.d("prefs","Int: " + mobilUsuario);
            Log.d("prefs","String: " + contrasinalUsuario);
            Log.d("prefs","Boolean: " + publicidadeUsuario);
+    }*/
+
+    private void escribirAlmacenamentoInterno(String nomeArquivo, String contido) {
+
+        try {
+            //abrimos arquivo e escribimos o contido
+            FileOutputStream arquivo = openFileOutput(nomeArquivo, Context.MODE_PRIVATE);
+            arquivo.write(contido.getBytes());
+            arquivo.close();
+
+            Log.d("AlmacenamentoInterno", "Arquivo gardado OK");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("AlmacenamentoInterno", "Erro ao gardar");
+        }
+    }
+
+    private void lerAlmacenamentoInterno(String nomeArquivo) {
+        try {
+            FileInputStream fis = openFileInput(nomeArquivo);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+
+            //ler liña a liña
+            StringBuilder contido = new StringBuilder();
+            String linha;
+            while ((linha = br.readLine()) != null) {
+                contido.append(linha).append("\n");
+            }
+
+            br.close();
+            fis.close();
+
+            // Mostrar el contenido en el log
+            Log.d("AlmacenamentoInterno", "Contido:  " + contido.toString());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("AlmacenamentoInterno", "Erro ao ler o arquivo");
+        }
+    }
+
+    private void localizarArquivo(String arquivo) {
+        File archivo = new File(getFilesDir(), "archivo.txt");
+        Log.d("AlmacenamentoInterno", "Ruta do arquivo: " + archivo.getAbsolutePath());
+    }
+
+
+    private void gardarAlmaceamentoExterno() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
+
+        //si podemos escribir o si tenemos permisos de escritura... crea un novo archivo e escribimos nel
+        if (isExternalStorageWritable()) {
+            File file = new File(getExternalFilesDir(null), "hello all.txt"); // Carpeta privada
+            try {
+                FileWriter writer = new FileWriter(file);
+                writer.append("Hola Mundo!");
+                writer.append("\r\nEste arquivo pode verlo todo dios!");
+                writer.close();
+                Log.d("MainActivity", "Arquivo escrito: " + file.getAbsolutePath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Log.e("MainActivity", "O almaceamento externo non está dispoñibel.");
+        }
+
+    }
+
+    private boolean isExternalStorageWritable() {
+        //nos devuelve el estado de nuestro almacenamiento
+        return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
+    }
+
+    private boolean isExternalStorageReadable() {
+        //nos mira si podemos ler del sistema de almacenamiento
+        String state = Environment.getExternalStorageState();
+        return Environment.MEDIA_MOUNTED.equals(state) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
+    }
+
+    private void lerAlmaceamentoExterno() {
+        if (isExternalStorageReadable()) {
+            File file = new File(getExternalFilesDir(null), "hello all.txt");
+            if (file.exists()) {
+                try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        stringBuilder.append(line).append("\n");
+                    }
+                    Log.d("MainActivity", "Contenido del archivo: " + stringBuilder.toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Log.e("MainActivity", "Archivo no encontrado.");
+            }
+        } else {
+            Log.e("MainActivity", "No se puede leer desde almacenamiento externo.");
+        }
     }
 }
