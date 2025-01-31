@@ -71,17 +71,17 @@ public class MainActivity extends AppCompatActivity {
 
 
         //inicializamos c/compoñente co seu id:
-        //gardar = findViewById(R.id.btn_gardar);
-        //limpar = findViewById(R.id.btn_limpar);
+        gardar = findViewById(R.id.btn_gardar);
+        limpar = findViewById(R.id.btn_limpar);
         nome = findViewById(R.id.edit_nome);
-        //apelidos = findViewById(R.id.edit_apelidos);
-        //mobil = findViewById(R.id.edit_mobil);
+        apelidos = findViewById(R.id.edit_apelidos);
+        mobil = findViewById(R.id.edit_mobil);
         email = findViewById(R.id.edit_email);
-        //contrasinal = findViewById(R.id.edit_contrasinal);
-        //publicidade = findViewById(R.id.check_publicidade);
-        //imaxe = findViewById(R.id.imaxe);
-        //imaxe.setImageResource(R.drawable.journey);
-        //axuda = findViewById(R.id.btn_axuda);
+        contrasinal = findViewById(R.id.edit_contrasinal);
+        publicidade = findViewById(R.id.check_publicidade);
+        imaxe = findViewById(R.id.imaxe);
+        imaxe.setImageResource(R.drawable.journey);
+        axuda = findViewById(R.id.btn_axuda);
 
         gardar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,10 +105,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*//probarPreferenciasCompartidas();
+        //probarPreferenciasCompartidas();
         cargarDatosAlForm();
 
-        //almaceamento interno
+        /*//almaceamento interno
         escribirAlmacenamentoInterno("arquivo.txt", "Exemplo de almacenamento interno en Android");
         lerAlmacenamentoInterno("arquivo.txt");
         localizarArquivo("arquivo.txt");
@@ -125,14 +125,19 @@ public class MainActivity extends AppCompatActivity {
         AppDataBase bd = AppDataBase.getInstance(this);
         UsuarioDao usuarioDao = bd.usuarioDao();
 
-        Usuario nuevoUsuario = new Usuario("María Sanxe","ms@gmail.com");
+        //Usuario nuevoUsuario = new Usuario("María Sanxe","ms@gmail.com");
+        Usuario nuevoUsuario = new Usuario("María","Sanxe","ms@gmail.com","623456789","abc123.",true);
         usuarioDao.insertar(nuevoUsuario);
 
         List<Usuario> usuarios = usuarioDao.obtenerTodos();
         for (Usuario u : usuarios) {
-            Log.d("Base de datos de room: ", "Usuario: " + u.getNombre() + " - " + u.getEmail());
+            Log.d("Base de datos de room: ", "Usuario: " + u.getNombre() + " - " + u.getApelidos() + " - " + u.getEmail() + " - " + u.getMobil() + " - " + u.getContrasinal() + " - " + u.isPublicidade());
             nome.setText(u.getNombre());
+            apelidos.setText(u.getApelidos());
             email.setText(u.getEmail());
+            mobil.setText(u.getMobil());
+            contrasinal.setText(u.getContrasinal());
+            publicidade.setChecked(u.isPublicidade());
         }
 
     }
@@ -208,14 +213,14 @@ public class MainActivity extends AppCompatActivity {
            editor.putString("nome","John");
            editor.putString("apelido","Doe");
            editor.putString("email","johndoe@gmail.com");
-           editor.putInt("mobil",123456789);
+           editor.putString("mobil","123456789");
            editor.putString("contrasinal","matrix10");
            editor.putBoolean("publicidade",true);
            editor.apply();
            String nomeUsuario = prefs.getString("nome"," ");
            String apelidoUsuario = prefs.getString("apelido"," ");
            String emailUsuario = prefs.getString("email"," ");
-           int mobilUsuario = prefs.getInt("mobil",0);
+           String mobilUsuario = prefs.getString("mobil"," ");
            String contrasinalUsuario = prefs.getString("contrasinal"," ");
            boolean publicidadeUsuario = prefs.getBoolean("publicidade",false);
 
