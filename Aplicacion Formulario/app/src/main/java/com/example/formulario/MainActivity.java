@@ -37,6 +37,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
+
+import Dao.AppDataBase;
+import Dao.UsuarioDao;
+import Entities.Usuario;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -66,27 +71,27 @@ public class MainActivity extends AppCompatActivity {
 
 
         //inicializamos c/compoñente co seu id:
-        gardar = findViewById(R.id.btn_gardar);
-        limpar = findViewById(R.id.btn_limpar);
+        //gardar = findViewById(R.id.btn_gardar);
+        //limpar = findViewById(R.id.btn_limpar);
         nome = findViewById(R.id.edit_nome);
-        apelidos = findViewById(R.id.edit_apelidos);
-        mobil = findViewById(R.id.edit_mobil);
+        //apelidos = findViewById(R.id.edit_apelidos);
+        //mobil = findViewById(R.id.edit_mobil);
         email = findViewById(R.id.edit_email);
-        contrasinal = findViewById(R.id.edit_contrasinal);
-        publicidade = findViewById(R.id.check_publicidade);
-        imaxe = findViewById(R.id.imaxe);
-        imaxe.setImageResource(R.drawable.journey);
-        axuda = findViewById(R.id.btn_axuda);
+        //contrasinal = findViewById(R.id.edit_contrasinal);
+        //publicidade = findViewById(R.id.check_publicidade);
+        //imaxe = findViewById(R.id.imaxe);
+        //imaxe.setImageResource(R.drawable.journey);
+        //axuda = findViewById(R.id.btn_axuda);
 
-        /*gardar.setOnClickListener(new View.OnClickListener() {
+        gardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(MainActivity.this,"Enviado",Toast.LENGTH_SHORT).show();
             }
-        });*/
+        });
 
-        gardar.setOnClickListener(view -> getCurrentLocation()); //nos definimos este método
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        //gardar.setOnClickListener(view -> getCurrentLocation()); //nós definimos este método
+        //fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         limpar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,8 +105,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //probarPreferenciasCompartidas();
-        //cargarDatosAlForm();
+        /*//probarPreferenciasCompartidas();
+        cargarDatosAlForm();
 
         //almaceamento interno
         escribirAlmacenamentoInterno("arquivo.txt", "Exemplo de almacenamento interno en Android");
@@ -110,7 +115,25 @@ public class MainActivity extends AppCompatActivity {
 
         //almaceamento externo
         gardarAlmaceamentoExterno();
-        lerAlmaceamentoExterno();
+        lerAlmaceamentoExterno();*/
+
+        probarRoom();
+
+    }
+
+    private void probarRoom() {
+        AppDataBase bd = AppDataBase.getInstance(this);
+        UsuarioDao usuarioDao = bd.usuarioDao();
+
+        Usuario nuevoUsuario = new Usuario("María Sanxe","ms@gmail.com");
+        usuarioDao.insertar(nuevoUsuario);
+
+        List<Usuario> usuarios = usuarioDao.obtenerTodos();
+        for (Usuario u : usuarios) {
+            Log.d("Base de datos de room: ", "Usuario: " + u.getNombre() + " - " + u.getEmail());
+            nome.setText(u.getNombre());
+            email.setText(u.getEmail());
+        }
 
     }
 
@@ -179,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("prefs", "Int: " + claveUsuario);
         Log.d("prefs", "Boolean: " + recordarUsuario);
     }
-    /*public void cargarDatosAlForm() {
+    public void cargarDatosAlForm() {
            SharedPreferences prefs = this.getSharedPreferences("MisPreferencias",Context.MODE_PRIVATE);
            SharedPreferences.Editor editor = prefs.edit();
            editor.putString("nome","John");
@@ -208,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
            Log.d("prefs","Int: " + mobilUsuario);
            Log.d("prefs","String: " + contrasinalUsuario);
            Log.d("prefs","Boolean: " + publicidadeUsuario);
-    }*/
+    }
 
     private void escribirAlmacenamentoInterno(String nomeArquivo, String contido) {
 
