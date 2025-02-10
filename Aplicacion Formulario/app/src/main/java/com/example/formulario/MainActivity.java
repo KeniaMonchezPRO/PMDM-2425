@@ -25,6 +25,8 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -44,7 +46,7 @@ import Dao.UsuarioDao;
 import Entities.Usuario;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private Button gardar;
     private Button limpar;
@@ -119,6 +121,20 @@ public class MainActivity extends AppCompatActivity {
 
         probarRoom();
 
+
+
+        //Fragments:
+        //coje e inyecta el fragmento del menu inferior
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.contenedor_fragment, new BottomMenuFragment());
+        transaction.commit();
+
+    }
+
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_main;
     }
 
     private void probarRoom() {
