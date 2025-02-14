@@ -85,12 +85,12 @@ public class MainActivity extends BaseActivity {
         imaxe.setImageResource(R.drawable.journey);
         axuda = findViewById(R.id.btn_axuda);
 
-        gardar.setOnClickListener(new View.OnClickListener() {
+        /*gardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(MainActivity.this,"Enviado",Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
         //gardar.setOnClickListener(view -> getCurrentLocation()); //nós definimos este método
         //fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -106,6 +106,17 @@ public class MainActivity extends BaseActivity {
                 publicidade.setChecked(false);
             }
         });
+
+        gardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SegundaActivity.class);
+                Usuario usuario = new Usuario("Kenny","kenny@gmail.com");
+                intent.putExtra("usuario",usuario);
+                startActivity(intent);
+            }
+        });
+
 
         //probarPreferenciasCompartidas();
         cargarDatosAlForm();
