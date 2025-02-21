@@ -4,8 +4,10 @@ import static androidx.core.location.LocationManagerCompat.getCurrentLocation;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -28,6 +30,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.formulario.broadcastReceivers.WifiReceiver;
 import com.example.formulario.services.MiServicio;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -55,6 +58,8 @@ public class MainActivity extends BaseActivity {
     private CheckBox publicidade;
     private ImageButton imaxe;
     private Button axuda;
+
+    private WifiReceiver wifiReceiver;
 
     //probando xeolocalizacion:
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1; //codigo de permiso
@@ -144,6 +149,11 @@ public class MainActivity extends BaseActivity {
         //crea un intent y le pasamos la clase servicio
         Intent intent = new Intent(this, MiServicio.class);
         startService(intent);
+
+        //broadcast receiver, este ejemplo nos avisa en caso de que nos quedemos sin wifi
+        wifiReceiver = new WifiReceiver();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(wifiReceiver, filter);
 
     }
 
