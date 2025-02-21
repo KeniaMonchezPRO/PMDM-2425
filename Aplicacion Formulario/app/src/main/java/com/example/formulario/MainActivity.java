@@ -28,6 +28,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.formulario.services.MiServicio;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 
@@ -132,14 +133,17 @@ public class MainActivity extends BaseActivity {
 
         probarRoom();
 
-
-
         //Fragments:
         //coje e inyecta el fragmento del menu inferior
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.contenedor_fragment, new BottomMenuFragment());
         transaction.commit();
+
+        //iniciar servizo
+        //crea un intent y le pasamos la clase servicio
+        Intent intent = new Intent(this, MiServicio.class);
+        startService(intent);
 
     }
 

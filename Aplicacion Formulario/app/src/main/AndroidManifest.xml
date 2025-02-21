@@ -48,6 +48,14 @@
         <activity
             android:name=".BaseActivity"
             android:exported="false" />
+
+        <service
+            android:name=".services.MiServicio"
+            android:enabled="true"
+            android:exported="false" />
+
+
+
     </application>
 
 </manifest>
