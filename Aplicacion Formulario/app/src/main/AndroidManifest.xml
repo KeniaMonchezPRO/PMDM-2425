@@ -60,6 +60,22 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
         </receiver>
+
+        <!--    Camara-->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.formulario.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" /> <!-- file_paths.xml: ruta en la que almacenaremos las images y videos-->
+        </provider>
+
     </application>
+
+    <!--  que utilizamos la Camara y que necesitamos permisos -->
+    <uses-feature android:name="android.hardware.camera" android:required="true"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
 
 </manifest>

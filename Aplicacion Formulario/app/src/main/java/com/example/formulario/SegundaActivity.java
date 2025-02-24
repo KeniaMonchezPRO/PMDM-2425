@@ -1,13 +1,36 @@
 package com.example.formulario;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import org.w3c.dom.Text;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import Entities.Usuario;
 
@@ -15,6 +38,11 @@ public class SegundaActivity extends BaseActivity {
 
     private TextView nombre;
     private TextView email;
+
+    //foto
+    private ImageView imageView; //para mostrar la foto
+    private String currentPhotoPath; //la ruta de la foto
+    private static final int REQUEST_CAMERA_PERMISSION = 100; //solicita permismo para usar la camara
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +67,25 @@ public class SegundaActivity extends BaseActivity {
             nombre.setText(usuario.getNombre());
             email.setText(usuario.getEmail());
         }
+
+        //camara
+        imageView = findViewById(R.id.imageView);
+        Button btnCapture = findViewById(R.id.btnCapture);
+
+        btnCapture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //miramos si tenemos permisos para acceder a la camara, en caso de que no, pedimos permiso, en caso de que si llamamos openCamera()
+                if (ContextCompat.checkSelfPermission(SegundaActivity.this, android.Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(SegundaActivity.this,
+                            new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+                } else {
+                    openCamera();
+                }
+            }
+        });
+
     }
 
     @Override
@@ -46,4 +93,63 @@ public class SegundaActivity extends BaseActivity {
         return R.layout.activity_segunda;
     }
 
+    // camara: abrir
+    private void openCamera() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //llama a la camara y en caso que se produzca un error muestra mensaje, sino la almacena en la ruta establecida
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                Toast.makeText(this, "Error al crear el archivo", Toast.LENGTH_SHORT).show();
+            }
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this, "com.example.formulario.fileprovider", photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                cameraLauncher.launch(takePictureIntent);
+            }
+        }
+    }
+
+    // camara: crear imaxe
+    //intenta crear un arquivo de tipo imagen que nos devuelve un File
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()); //indicamos patron de la fecha
+        //el nombre
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        //el path en el que lo almacenamos
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        //definimos formato de la imagen
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+        //la ruta completa en la que guardaremos la imagen
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    private final ActivityResultLauncher<Intent> cameraLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == RESULT_OK) {
+                        imageView.setImageURI(Uri.fromFile(new File(currentPhotoPath)));
+                    }
+                }
+            });
+
+    //comprobar si tenemos permisos para acceder a la camara (es casi que lo mismo de lo de permisos de ubicación)
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == REQUEST_CAMERA_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openCamera();
+            } else {
+                Toast.makeText(this, "Permiso de cámara denegado", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }
