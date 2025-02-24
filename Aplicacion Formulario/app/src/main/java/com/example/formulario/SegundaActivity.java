@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -43,6 +44,10 @@ public class SegundaActivity extends BaseActivity {
     private ImageView imageView; //para mostrar la foto
     private String currentPhotoPath; //la ruta de la foto
     private static final int REQUEST_CAMERA_PERMISSION = 100; //solicita permismo para usar la camara
+
+    //video
+    private VideoView videoView;
+    private String currentVideoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +88,18 @@ public class SegundaActivity extends BaseActivity {
                 } else {
                     openCamera();
                 }
+            }
+        });
+
+        //video
+        videoView = findViewById(R.id.videoView);
+        Button btnCaptureVideo = findViewById(R.id.btnCaptureVideo);
+
+        // Capturar Video
+        btnCaptureVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCameraForVideo();
             }
         });
 
@@ -137,6 +154,44 @@ public class SegundaActivity extends BaseActivity {
                     }
                 }
             });
+
+    private void openCameraForVideo() {
+        Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
+            File videoFile = null;
+            try {
+                videoFile = createVideoFile();
+            } catch (IOException ex) {
+                Toast.makeText(this, "Error al crear archivo de video", Toast.LENGTH_SHORT).show();
+            }
+            if (videoFile != null) {
+                Uri videoURI = FileProvider.getUriForFile(this, "com.example.formulario.fileprovider", videoFile);
+                takeVideoIntent.putExtra(MediaStore.EXTRA_OUTPUT, videoURI);
+                videoLauncher.launch(takeVideoIntent);
+            }
+        }
+    }
+
+    private final ActivityResultLauncher<Intent> videoLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == RESULT_OK) {
+                        videoView.setVideoURI(Uri.fromFile(new File(currentVideoPath)));
+                        videoView.start(); // Reproducir automáticamente
+                    }
+                }
+            });
+
+    private File createVideoFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String videoFileName = "VID_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_MOVIES);
+        File video = File.createTempFile(videoFileName, ".mp4", storageDir);
+        currentVideoPath = video.getAbsolutePath();
+        return video;
+    }
 
     //comprobar si tenemos permisos para acceder a la camara (es casi que lo mismo de lo de permisos de ubicación)
     @Override
